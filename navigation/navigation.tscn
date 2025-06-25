@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://cs6basaws6nls"]
+
+[ext_resource type="Texture2D" uid="uid://d0f8psr5tprys" path="res://Terrestrial.png" id="1_avam6"]
+[ext_resource type="Script" uid="uid://60s71tjt35hb" path="res://navigation/Dude.cs" id="2_moll0"]
+[ext_resource type="Texture2D" uid="uid://cg3vlgm4qxjq" path="res://icon.svg" id="3_yuw3b"]
+[ext_resource type="Script" uid="uid://cc48fn6q76h5r" path="res://navigation/Player.cs" id="4_qcdcr"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jfo2b"]
+vertices = PackedVector2Array(1244.15, 744.242, -89.9922, 777.711, -13.8828, -36.0625, 1256.83, -44.9219)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-23, -46, 1267, -55, 1254, 754, -101, 788)])
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7sxkd"]
+texture = ExtResource("1_avam6")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_epcev"]
+sources/0 = SubResource("TileSetAtlasSource_7sxkd")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ce6ys"]
+radius = 32.0
+height = 74.0
+
+[node name="origin" type="Node2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_jfo2b")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D"]
+tile_set = SubResource("TileSet_epcev")
+
+[node name="Dude" type="CharacterBody2D" parent="." node_paths=PackedStringArray("Target")]
+position = Vector2(81, 54)
+script = ExtResource("2_moll0")
+Target = NodePath("../Player")
+
+[node name="Sprite2D" type="Sprite2D" parent="Dude"]
+modulate = Color(0.997235, 0.463524, 0.39529, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_yuw3b")
+metadata/_edit_lock_ = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Dude"]
+
+[node name="NavTimer" type="Timer" parent="Dude"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dude"]
+shape = SubResource("CapsuleShape2D_ce6ys")
+metadata/_edit_lock_ = true
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(936, 434)
+script = ExtResource("4_qcdcr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+modulate = Color(0.450148, 0.731506, 0.434877, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_yuw3b")
+metadata/_edit_lock_ = true
+
+[connection signal="timeout" from="Dude/NavTimer" to="Dude" method="OnNavTimerTimeout"]
