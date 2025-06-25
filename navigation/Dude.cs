@@ -22,7 +22,9 @@ public partial class Dude : CharacterBody2D
 	public override void _Ready()
 	{
 		navigationAgent2D = GetNode<NavigationAgent2D>("NavigationAgent2D");
+		navigationAgent2D.Radius = 100; //(GetNode<CollisionShape2D>("CollisionShape2D").Shape as CircleShape2D).Radius;
 		navigationAgent2D.TargetPosition = Target.GlobalPosition;
+		
 
 		// Create and configure the navigation timer
 		navigationTimer = new Timer();
