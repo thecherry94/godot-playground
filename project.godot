@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kachel_Test"
-run/main_scene="uid://d2o6p4181mep7"
+run/main_scene="uid://cs6basaws6nls"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
